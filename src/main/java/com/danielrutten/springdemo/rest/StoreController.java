@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController
 public class StoreController {
 
@@ -21,7 +19,8 @@ public class StoreController {
     }
 
     @GetMapping("/store/{id}")
-    public Optional<Store> getStore(@PathVariable Long id) {
-        return storeRepository.findById(id);
+    public Store getStore(@PathVariable Long id) {
+        return storeRepository.findById(id)
+                .orElseThrow(() -> new StoreNotFoundException(id));
     }
 }

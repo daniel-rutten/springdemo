@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController
 public class ProductController {
 
@@ -21,7 +19,8 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public Optional<Product> getProduct(@PathVariable Long id) {
-        return productRepository.findById(id);
+    public Product getProduct(@PathVariable Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 }

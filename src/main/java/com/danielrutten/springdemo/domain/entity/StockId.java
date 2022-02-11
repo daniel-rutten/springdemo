@@ -1,14 +1,16 @@
 package com.danielrutten.springdemo.domain.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter
 @Setter
+@Builder
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 public class StockId implements Serializable {
 
     private static final long serialVersionUID = 1L;
