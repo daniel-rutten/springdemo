@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    # Load data.sql after schema creation rather than before
+    defer-datasource-initialization: true
+  h2:
+    # Enable embedded GUI console at http://localhost:8080/h2-console
+    console.enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: password
