@@ -40,12 +40,15 @@ public class Stock {
     private List<Reservation> reservations = Collections.emptyList();
 
     /**
-     * Finalize the given reservation by decreasing the items in stock with the items reserved and removing the reservation.
+     * Update the items in stock by handling the given reservation: if it has the status PICKED_UP, decrease the items
+     * in stock with the items reserved and close the reservation.
      *
-     * @param reservation The reservation to finalize.
+     * @param reservation The reservation to handle.
      */
-    public void finalizeReservation(Reservation reservation) {
-        itemsInStock = itemsInStock - reservation.getItemsReserved();
-        reservation.setStatus(ReservationStatus.CLOSED);
+    public void updateItemsInStock(Reservation reservation) {
+        if (ReservationStatus.PICKED_UP.equals(reservation.getStatus())) {
+            itemsInStock = itemsInStock - reservation.getItemsReserved();
+            reservation.setStatus(ReservationStatus.CLOSED);
+        }
     }
 }
