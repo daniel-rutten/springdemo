@@ -1,6 +1,7 @@
 package com.danielrutten.springdemo;
 
 import com.danielrutten.springdemo.rest.ProductController;
+import com.danielrutten.springdemo.rest.ReservationController;
 import com.danielrutten.springdemo.rest.StockController;
 import com.danielrutten.springdemo.rest.StoreController;
 import org.junit.jupiter.api.Test;
@@ -23,11 +24,15 @@ class SpringdemoApplicationTests {
     @Autowired
     private StockController stockController;
 
+    @Autowired
+    private ReservationController reservationController;
+
     @Test
     void contextLoads() {
         assertThat(storeController, is(notNullValue()));
         assertThat(productController, is(notNullValue()));
         assertThat(stockController, is(notNullValue()));
+        assertThat(reservationController, is(notNullValue()));
     }
 
 }
