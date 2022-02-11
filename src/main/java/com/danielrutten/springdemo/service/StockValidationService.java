@@ -2,9 +2,6 @@ package com.danielrutten.springdemo.service;
 
 import com.danielrutten.springdemo.domain.entity.Reservation;
 import com.danielrutten.springdemo.domain.entity.Stock;
-import com.danielrutten.springdemo.domain.repository.ReservationRepository;
-import com.danielrutten.springdemo.domain.repository.StockRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,12 +11,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StockValidationService {
-
-    @Autowired
-    private StockRepository stockRepository;
-
-    @Autowired
-    private ReservationRepository reservationRepository;
 
     public void validate(Stock stock) {
         Integer totalItemsReserved = stock.getReservations()
