@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -37,7 +37,7 @@ public class Stock {
     @JsonManagedReference
     @Builder.Default
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "stock")
-    private List<Reservation> reservations = Collections.emptyList();
+    private List<Reservation> reservations = new ArrayList<>();
 
     /**
      * Update the items in stock by handling the given reservation: if it has the status PICKED_UP, decrease the items
