@@ -1,6 +1,7 @@
 package com.danielrutten.springdemo.rest;
 
 import com.danielrutten.springdemo.domain.entity.Reservation;
+import com.danielrutten.springdemo.domain.entity.ReservationStatus;
 import com.danielrutten.springdemo.domain.entity.Stock;
 import com.danielrutten.springdemo.domain.repository.ProductRepository;
 import com.danielrutten.springdemo.domain.repository.ReservationRepository;
@@ -68,6 +69,13 @@ public class ReservationController {
                     r.setItemsReserved(reservationDto.getItemsReserved());
                     r.setStatus(reservationDto.getStatus());
                     stockValidationService.validate(r.getStock()); // Check if sufficient stock remains for all reservations
+
+                    // If the reservation is picked up, decrease the items in stock and close the reservation
+                    if (ReservationStatus.PICKED_UP.equals(r.getStatus())) {
+                        r.getStock().finalizeReservation(r);
+                        stockRepository.save(r.getStock());
+                    }
+
                     return reservationRepository.save(r);
                 })
                 .orElseThrow(() -> new ReservationNotFoundException(reservationId));

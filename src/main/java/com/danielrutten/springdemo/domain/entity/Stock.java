@@ -38,4 +38,14 @@ public class Stock {
     @Builder.Default
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "stock")
     private List<Reservation> reservations = Collections.emptyList();
+
+    /**
+     * Finalize the given reservation by decreasing the items in stock with the items reserved and removing the reservation.
+     *
+     * @param reservation The reservation to finalize.
+     */
+    public void finalizeReservation(Reservation reservation) {
+        itemsInStock = itemsInStock - reservation.getItemsReserved();
+        reservation.setStatus(ReservationStatus.CLOSED);
+    }
 }

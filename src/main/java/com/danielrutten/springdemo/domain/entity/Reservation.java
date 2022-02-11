@@ -39,13 +39,12 @@ public class Reservation {
     private ReservationStatus status;
 
     /**
-     * A reservation is active when the status is OPEN (and not CANCELLED or FINALIZED)
-     * and the reservation time is not expired.
+     * A reservation is active when the status is not CLOSED and the reservation time is not expired.
      *
      * @return True, if the reservation is still active. False, otherwise.
      */
     public boolean isActive() {
-        return ReservationStatus.OPEN.equals(status)
+        return !ReservationStatus.CLOSED.equals(status)
                 && LocalDateTime.now().isBefore(reservationDateTime.plus(EXPIRATION_TIME));
     }
 }

@@ -26,22 +26,10 @@ class ReservationTest {
     }
 
     @Test
-    void when_statusIsCancelledAndNotExpired_then_reservationIsNotActive() {
+    void when_statusIsClosedAndNotExpired_then_reservationIsNotActive() {
         // given
         Reservation reservation = Reservation.builder()
-                .status(ReservationStatus.CANCELLED)
-                .reservationDateTime(LocalDateTime.now().minus(EXPIRATION_TIME).plusSeconds(1))
-                .build();
-
-        // when+then
-        assertThat(reservation.isActive(), equalTo(false));
-    }
-
-    @Test
-    void when_statusIsFinalizedAndNotExpired_then_reservationIsNotActive() {
-        // given
-        Reservation reservation = Reservation.builder()
-                .status(ReservationStatus.FINALIZED)
+                .status(ReservationStatus.CLOSED)
                 .reservationDateTime(LocalDateTime.now().minus(EXPIRATION_TIME).plusSeconds(1))
                 .build();
 

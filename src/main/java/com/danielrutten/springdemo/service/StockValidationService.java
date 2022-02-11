@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Validates the current state of the stock of a product in a store by ensuring there is
- * enough stock to satisfy all active reservations. All closed/finalized or expired reservations
+ * enough stock to satisfy all active reservations. All closed or expired reservations
  * are ignored.
  */
 @Service

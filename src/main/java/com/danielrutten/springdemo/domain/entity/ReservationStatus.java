@@ -4,8 +4,8 @@ public enum ReservationStatus {
 
     OPEN,
 
-    FINALIZED,
+    PICKED_UP,
 
-    CANCELLED
+    CLOSED
 
 }
