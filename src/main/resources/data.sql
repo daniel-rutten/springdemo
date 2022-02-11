@@ -12,4 +12,16 @@ insert into PRODUCT (PRODUCT_TYPE, BRAND, DESCRIPTION) values ('PAINT', 'Flexa',
 insert into PRODUCT (PRODUCT_TYPE, BRAND, DESCRIPTION) values ('PAINT', 'Histor', 'Perfect Finish grondverf 7000 wit 2,5 liter');
 insert into PRODUCT (PRODUCT_TYPE, BRAND, DESCRIPTION) values ('PAINT', 'Sigma', 'primer exterieur grijs 750 ml');
 
+insert into STOCK (STORE_ID, PRODUCT_ID, ITEMS_IN_STOCK) values (1, 1, 14);
+insert into STOCK (STORE_ID, PRODUCT_ID, ITEMS_IN_STOCK) values (1, 2, 21);
+insert into STOCK (STORE_ID, PRODUCT_ID, ITEMS_IN_STOCK) values (1, 3, 7);
+
+insert into STOCK (STORE_ID, PRODUCT_ID, ITEMS_IN_STOCK) values (2, 1, 5);
+insert into STOCK (STORE_ID, PRODUCT_ID, ITEMS_IN_STOCK) values (2, 2, 31);
+insert into STOCK (STORE_ID, PRODUCT_ID, ITEMS_IN_STOCK) values (2, 3, 17);
+
+insert into STOCK (STORE_ID, PRODUCT_ID, ITEMS_IN_STOCK) values (3, 1, 25);
+insert into STOCK (STORE_ID, PRODUCT_ID, ITEMS_IN_STOCK) values (3, 2, 0);
+insert into STOCK (STORE_ID, PRODUCT_ID, ITEMS_IN_STOCK) values (3, 3, 9);
+
 

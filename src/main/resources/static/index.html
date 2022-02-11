@@ -4,13 +4,47 @@
 <h1>Welcome to the Spring Demo!</h1>
 
 <p>Relevant endpoints:</p>
-<ul>
-    <li><a href="/api/stores">/api/stores</a></li>
-    <li><a href="/api/store/1">/api/store/1</a></li>
-    <li><a href="/api/products">/api/products</a></li>
-    <li><a href="/api/product/1">/api/product/1</a></li>
-    <li><a href="/api/h2-console">/api/h2-console</a> (password = "<b>password</b>")</li>
-</ul>
+<table>
+    <tr>
+        <th>Endpoint</th>
+        <th>Description</th>
+    </tr>
+
+    <tr>
+        <td><a href="/api/stores">/api/stores</a></td>
+        <td>REST endpoint to retrieve all stores</td>
+    </tr>
+
+    <tr>
+        <td><a href="/api/store/1">/api/store/1</a></td>
+        <td>REST endpoint to retrieve a single store by id</td>
+    </tr>
+
+    <tr>
+        <td><a href="/api/products">/api/products</a></td>
+        <td>REST endpoint to retrieve all products</td>
+    </tr>
+
+    <tr>
+        <td><a href="/api/product/1">/api/product/1</a></td>
+        <td>REST endpoint to retrieve a single product by id</td>
+    </tr>
+
+    <tr>
+        <td><a href="/api/product/1/stocks">/api/product/1/stocks</a></td>
+        <td>REST endpoint to retrieve the stock for a single product for all stores</td>
+    </tr>
+
+    <tr>
+        <td><a href="/api/store/1/stocks">/api/store/1/stocks</a></td>
+        <td>REST endpoint to retrieve the stock for a single store for all products</td>
+    </tr>
+
+    <tr>
+        <td><a href="/api/h2-console">/api/h2-console</a></td>
+        <td>Embedded GUI console for H2 database (password = "<b>password</b>")</td>
+    </tr>
+</table>
 </body>
 
 </html>

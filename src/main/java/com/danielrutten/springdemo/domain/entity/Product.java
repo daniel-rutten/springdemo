@@ -1,6 +1,7 @@
 package com.danielrutten.springdemo.domain.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,9 +9,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
