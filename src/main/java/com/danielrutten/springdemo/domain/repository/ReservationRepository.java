@@ -1,12 +1,14 @@
 package com.danielrutten.springdemo.domain.repository;
 
 import com.danielrutten.springdemo.domain.entity.Reservation;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ReservationRepository extends CrudRepository<Reservation, Long> {
-    Iterable<Reservation> findByStoreId(Long storeId);
+import java.util.List;
 
-    Iterable<Reservation> findByStoreIdAndProductId(Long storeId, Long productId);
+@Repository
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+    List<Reservation> findByStockStoreId(Long storeId);
+
+    List<Reservation> findByStockStoreIdAndStockProductId(Long storeId, Long productId);
 }

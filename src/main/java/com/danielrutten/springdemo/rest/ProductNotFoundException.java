@@ -1,8 +1,8 @@
 package com.danielrutten.springdemo.rest;
 
-class ProductNotFoundException extends RuntimeException {
+public class ProductNotFoundException extends RuntimeException {
 
-    ProductNotFoundException(Long productId) {
+    public ProductNotFoundException(Long productId) {
         super(String.format("Could not find product with id %s", productId));
     }
 }

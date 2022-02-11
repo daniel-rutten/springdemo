@@ -1,16 +1,17 @@
 package com.danielrutten.springdemo.domain.repository;
 
 import com.danielrutten.springdemo.domain.entity.Stock;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StockRepository extends CrudRepository<Stock, Long> {
-    Iterable<Stock> findByStockIdProductId(Long productId);
+public interface StockRepository extends JpaRepository<Stock, Long> {
+    List<Stock> findByProductId(Long productId);
 
-    Iterable<Stock> findByStockIdStoreId(Long storeId);
+    List<Stock> findByStoreId(Long storeId);
 
-    Optional<Stock> findByStockIdStoreIdAndStockIdProductId(Long storeId, Long productId);
+    Optional<Stock> findByStoreIdAndProductId(Long storeId, Long productId);
 }

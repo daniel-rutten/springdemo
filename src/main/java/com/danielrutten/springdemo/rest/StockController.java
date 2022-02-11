@@ -2,11 +2,11 @@ package com.danielrutten.springdemo.rest;
 
 import com.danielrutten.springdemo.domain.entity.Product;
 import com.danielrutten.springdemo.domain.entity.Stock;
-import com.danielrutten.springdemo.domain.entity.StockId;
 import com.danielrutten.springdemo.domain.entity.Store;
 import com.danielrutten.springdemo.domain.repository.ProductRepository;
 import com.danielrutten.springdemo.domain.repository.StockRepository;
 import com.danielrutten.springdemo.domain.repository.StoreRepository;
+import com.danielrutten.springdemo.service.StockValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,22 +22,23 @@ public class StockController {
     @Autowired
     private StockRepository stockRepository;
 
+    @Autowired
+    private StockValidationService stockValidationService;
+
     @GetMapping("/product/{productId}/stock")
     public Iterable<Stock> getStockForProduct(@PathVariable Long productId) {
-        return stockRepository.findByStockIdProductId(productId);
+        return stockRepository.findByProductId(productId);
     }
 
     @GetMapping("/store/{storeId}/stock")
     public Iterable<Stock> getStockForStore(@PathVariable Long storeId) {
-        return stockRepository.findByStockIdStoreId(storeId);
+        return stockRepository.findByStoreId(storeId);
     }
 
     @GetMapping("/store/{storeId}/product/{productId}/stock")
-    public StockDto getStockForStoreAndProduct(@PathVariable Long storeId, @PathVariable Long productId) {
-        Integer itemsInStock = stockRepository.findByStockIdStoreIdAndStockIdProductId(storeId, productId)
-                .map(Stock::getItemsInStock)
-                .orElse(0);
-        return StockDto.builder().itemsInStock(itemsInStock).build();
+    public Stock getStockForStoreAndProduct(@PathVariable Long storeId, @PathVariable Long productId) {
+        return stockRepository.findByStoreIdAndProductId(storeId, productId)
+                .orElseThrow(() -> new StockNotFoundException(storeId, productId));
     }
 
     @PostMapping("/store/{storeId}/product/{productId}/stock")
@@ -47,7 +48,8 @@ public class StockController {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
         Stock stock = Stock.builder()
-                .stockId(StockId.builder().store(store).product(product).build())
+                .store(store)
+                .product(product)
                 .itemsInStock(stockDto.getItemsInStock())
                 .build();
         return stockRepository.save(stock);
@@ -55,9 +57,10 @@ public class StockController {
 
     @PutMapping("/store/{storeId}/product/{productId}/stock")
     Stock updateStock(@RequestBody StockDto stockDto, @PathVariable Long storeId, @PathVariable Long productId) {
-        return stockRepository.findByStockIdStoreIdAndStockIdProductId(storeId, productId)
+        return stockRepository.findByStoreIdAndProductId(storeId, productId)
                 .map(s -> {
                     s.setItemsInStock(stockDto.getItemsInStock());
+                    stockValidationService.validate(s); // Check if sufficient stock remains for all reservations
                     return stockRepository.save(s);
                 })
                 .orElseGet(() -> createStock(stockDto, storeId, productId)); // If stock is not found, create stock instead
@@ -65,7 +68,7 @@ public class StockController {
 
     @DeleteMapping("/store/{storeId}/product/{productId}/stock")
     void deleteStock(@PathVariable Long storeId, @PathVariable Long productId) {
-        stockRepository.findByStockIdStoreIdAndStockIdProductId(storeId, productId)
+        stockRepository.findByStoreIdAndProductId(storeId, productId)
                 .ifPresent(s -> stockRepository.delete(s));
     }
 

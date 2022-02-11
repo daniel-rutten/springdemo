@@ -1,5 +1,6 @@
 package com.danielrutten.springdemo.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @Entity
+@Table(name = "RESERVATION")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reservation {
@@ -20,13 +22,11 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Prevent infinite recursion in JSON generation due to bidirectional relationship between Stock and Reservation
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "store_id", referencedColumnName = "id")
-    private Store store;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
+    @JoinColumn(name = "stock_id", referencedColumnName = "id")
+    private Stock stock;
 
     @Column
     private Integer itemsReserved;
