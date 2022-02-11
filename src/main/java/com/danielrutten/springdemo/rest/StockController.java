@@ -25,23 +25,23 @@ public class StockController {
     @Autowired
     private StockValidationService stockValidationService;
 
-    @GetMapping("/product/{productId}/stock")
+    @GetMapping("/products/{productId}/stocks")
     public Iterable<Stock> getStockForProduct(@PathVariable Long productId) {
         return stockRepository.findByProductId(productId);
     }
 
-    @GetMapping("/store/{storeId}/stock")
+    @GetMapping("/stores/{storeId}/stocks")
     public Iterable<Stock> getStockForStore(@PathVariable Long storeId) {
         return stockRepository.findByStoreId(storeId);
     }
 
-    @GetMapping("/store/{storeId}/product/{productId}/stock")
+    @GetMapping("/stores/{storeId}/products/{productId}/stocks")
     public Stock getStockForStoreAndProduct(@PathVariable Long storeId, @PathVariable Long productId) {
         return stockRepository.findByStoreIdAndProductId(storeId, productId)
                 .orElseThrow(() -> new StockNotFoundException(storeId, productId));
     }
 
-    @PostMapping("/store/{storeId}/product/{productId}/stock")
+    @PostMapping("/stores/{storeId}/products/{productId}/stocks")
     Stock createStock(@RequestBody StockDto stockDto, @PathVariable Long storeId, @PathVariable Long productId) {
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new StoreNotFoundException(storeId));
@@ -55,7 +55,7 @@ public class StockController {
         return stockRepository.save(stock);
     }
 
-    @PutMapping("/store/{storeId}/product/{productId}/stock")
+    @PutMapping("/stores/{storeId}/products/{productId}/stocks")
     Stock updateStock(@RequestBody StockDto stockDto, @PathVariable Long storeId, @PathVariable Long productId) {
         return stockRepository.findByStoreIdAndProductId(storeId, productId)
                 .map(s -> {
@@ -66,7 +66,7 @@ public class StockController {
                 .orElseGet(() -> createStock(stockDto, storeId, productId)); // If stock is not found, create stock instead
     }
 
-    @DeleteMapping("/store/{storeId}/product/{productId}/stock")
+    @DeleteMapping("/stores/{storeId}/products/{productId}/stocks")
     void deleteStock(@PathVariable Long storeId, @PathVariable Long productId) {
         stockRepository.findByStoreIdAndProductId(storeId, productId)
                 .ifPresent(s -> stockRepository.delete(s));

@@ -56,7 +56,7 @@ class StockControllerTest {
         when(stockRepository.save(stockArgumentCaptor.capture())).thenReturn(stock);
 
         // when+then
-        mockMvc.perform(put("/store/11/product/73/stock")
+        mockMvc.perform(put("/stores/11/products/73/stock")
                         .content(toJson(StockDto.builder().itemsInStock(128).build()))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

@@ -18,7 +18,7 @@ public class StoreController {
         return storeRepository.findAll();
     }
 
-    @GetMapping("/store/{id}")
+    @GetMapping("/stores/{id}")
     public Store getStore(@PathVariable Long id) {
         return storeRepository.findById(id)
                 .orElseThrow(() -> new StoreNotFoundException(id));

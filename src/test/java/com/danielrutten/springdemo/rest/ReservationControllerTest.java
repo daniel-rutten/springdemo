@@ -58,7 +58,7 @@ class ReservationControllerTest {
         when(stockRepository.findByStoreIdAndProductId(13L, 24L)).thenReturn(Optional.of(stock));
 
         // when+then
-        mockMvc.perform(post("/store/13/product/24/reservations")
+        mockMvc.perform(post("/stores/13/products/24/reservations")
                         .content(toJson(ReservationDto.builder().itemsReserved(99).status(ReservationStatus.OPEN).build()))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

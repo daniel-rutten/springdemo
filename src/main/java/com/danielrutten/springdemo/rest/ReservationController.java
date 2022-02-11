@@ -36,17 +36,17 @@ public class ReservationController {
         return reservationRepository.findById(reservationId);
     }
 
-    @GetMapping("/store/{storeId}/reservations")
+    @GetMapping("/stores/{storeId}/reservations")
     public Iterable<Reservation> getReservationForStore(@PathVariable Long storeId) {
         return reservationRepository.findByStockStoreId(storeId);
     }
 
-    @GetMapping("/store/{storeId}/product/{productId}/reservations")
+    @GetMapping("/stores/{storeId}/products/{productId}/reservations")
     public Iterable<Reservation> getReservationForStoreAndProduct(@PathVariable Long storeId, @PathVariable Long productId) {
         return reservationRepository.findByStockStoreIdAndStockProductId(storeId, productId);
     }
 
-    @PostMapping("/store/{storeId}/product/{productId}/reservations")
+    @PostMapping("/stores/{storeId}/products/{productId}/reservations")
     Reservation createReservation(@RequestBody ReservationDto reservationDto, @PathVariable Long storeId, @PathVariable Long productId) {
         Stock stock = stockRepository.findByStoreIdAndProductId(storeId, productId)
                 .orElseThrow(() -> new StockNotFoundException(storeId, productId));
@@ -80,7 +80,11 @@ public class ReservationController {
     @DeleteMapping("/reservations/{reservationId}")
     void deleteReservation(@PathVariable Long reservationId) {
         reservationRepository.findById(reservationId)
-                .ifPresent(r -> reservationRepository.delete(r));
+                .ifPresent(r -> {
+                    r.getStock().getReservations().remove(r);
+                    stockRepository.save(r.getStock());
+                    reservationRepository.delete(r);
+                });
     }
 
 }
